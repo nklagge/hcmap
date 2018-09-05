@@ -61,6 +61,7 @@ get_cost <- function(n){
 
 # main
 get_hclinks <- function(begin_date) {
+  res <- tibble()
   new_hits <- qry_nyt(begin_date = begin_date) 
   # how many new hits do we have
   num_hits <- new_hits$response$meta$hits
@@ -76,15 +77,14 @@ get_hclinks <- function(begin_date) {
     new_hits <- append(further_hits, new_hits, after = 0)
   }
   if (length(new_hits) > 0) {
-    new_hits %>%
+    res <- new_hits %>%
       map(get_hit_meta) %>%
       bind_rows() %>%
       filter(ckkr == "Hungry City") %>%
       select(url, snippet) %>%
       return()
-  }
-  # return zero-length tibble if no new hits
-  tibble()
+  } 
+  res
 }
 get_hcdata <- function(links) {
   links$url %>%
