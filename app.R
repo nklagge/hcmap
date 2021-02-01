@@ -95,7 +95,7 @@ server <- function(input, output) {
     # render map
     dta %>%
       leaflet() %>%
-      addProviderTiles("Wikimedia") %>%
+      addProviderTiles("Esri.WorldTopoMap") %>%
       addMarkers(~lon, ~lat, label = ~name, popup = ~popup, icon = fsicon)
   })
 }
